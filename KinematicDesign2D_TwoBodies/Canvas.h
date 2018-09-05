@@ -40,6 +40,7 @@ namespace canvas {
 
 		std::vector<kinematics::Kinematics> kinematics;
 		kinematics::Solution selected_solution; // currently selected solution
+		std::vector<kinematics::Solution> initial_solutions;
 		std::vector<kinematics::Solution> solutions;
 		std::pair<int, int> selectedJoint;
 		std::vector<kinematics::Object25D> fixed_bodies;
@@ -88,6 +89,7 @@ namespace canvas {
 		glm::dvec2 worldToScreenCoordinates(const glm::dvec2& p);
 
 		void calculateSolutions(int linkage_type, int num_samples, std::vector<std::pair<double, double>>& sigmas, bool avoid_branch_defect, double min_transmission_angle, const std::vector<double>& weights, int num_particles, int num_iterations, bool record_file);
+		void updateSolutions(int linkage_type, std::vector<std::pair<double, double>>& sigmas, bool avoid_branch_defect, double min_transmission_angle, const std::vector<double>& weights, int num_particles, int num_iterations, bool record_file);
 		void constructKinematics();
 		int findSolution(const std::vector<kinematics::Solution>& solutions, const glm::dvec2& pt, int joint_id);
 

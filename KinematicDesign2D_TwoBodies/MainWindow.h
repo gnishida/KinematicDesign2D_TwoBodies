@@ -41,6 +41,7 @@ public slots:
 	void onDeleteLayer();
 	void onLayerChanged();
 	void onGenerateLinkageWattI();
+	void onChangeWeights();
 	void onRun();
 	void onRunBackward();
 	void onStop();

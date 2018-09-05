@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	connect(ui.actionInsertLayer, SIGNAL(triggered()), this, SLOT(onInsertLayer()));
 	connect(ui.actionDeleteLayer, SIGNAL(triggered()), this, SLOT(onDeleteLayer()));
 	connect(ui.actionGenerateLinkageWattI, SIGNAL(triggered()), this, SLOT(onGenerateLinkageWattI()));
+	connect(ui.actionChangeWeights, SIGNAL(triggered()), this, SLOT(onChangeWeights()));
 	connect(ui.actionRun, SIGNAL(triggered()), this, SLOT(onRun()));
 	connect(ui.actionRunBackward, SIGNAL(triggered()), this, SLOT(onRunBackward()));
 	connect(ui.actionStop, SIGNAL(triggered()), this, SLOT(onStop()));
@@ -250,6 +251,34 @@ void MainWindow::onGenerateLinkageWattI() {
 
 		canvas->calculateSolutions(canvas::Canvas::LINKAGE_WATTI,
 			dlg.ui.lineEditNumSamples->text().toInt(),
+			sigmas,
+			dlg.ui.checkBoxAvoidBranchDefect->isChecked(),
+			dlg.ui.lineEditMinTransmissionAngle->text().toDouble(),
+			weights,
+			dlg.ui.lineEditNumParticles->text().toInt(),
+			dlg.ui.lineEditNumIterations->text().toInt(),
+			dlg.ui.checkBoxRecordFile->isChecked());
+	}
+}
+
+void MainWindow::onChangeWeights() {
+	LinkageSynthesisOptionDialog dlg;
+	if (dlg.exec()) {
+		std::vector<std::pair<double, double>> sigmas = {
+			std::make_pair(dlg.ui.lineEditStdDevPositionFirst->text().toDouble(), dlg.ui.lineEditStdDevOrientationFirst->text().toDouble()),
+			std::make_pair(dlg.ui.lineEditStdDevPositionMiddle->text().toDouble(), dlg.ui.lineEditStdDevOrientationMiddle->text().toDouble()),
+			std::make_pair(dlg.ui.lineEditStdDevPositionLast->text().toDouble(), dlg.ui.lineEditStdDevOrientationLast->text().toDouble())
+		};
+
+		std::vector<double> weights = {
+			dlg.ui.lineEditPositionErrorWeight->text().toDouble(),
+			dlg.ui.lineEditOrientationErrorWeight->text().toDouble(),
+			dlg.ui.lineEditLinkageLocationWeight->text().toDouble(),
+			dlg.ui.lineEditTrajectoryWeight->text().toDouble(),
+			dlg.ui.lineEditSizeWeight->text().toDouble()
+		};
+
+		canvas->updateSolutions(canvas::Canvas::LINKAGE_WATTI,
 			sigmas,
 			dlg.ui.checkBoxAvoidBranchDefect->isChecked(),
 			dlg.ui.lineEditMinTransmissionAngle->text().toDouble(),

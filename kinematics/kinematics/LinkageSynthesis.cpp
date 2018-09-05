@@ -163,8 +163,8 @@ namespace kinematics {
 			for (int i = 0; i < new_particles.size(); i++) {
 				// pertube the joints
 				for (int j = 0; j < new_particles[i].points.size(); j++) {
-					new_particles[i].points[j].x += genRand(-1, 1);
-					new_particles[i].points[j].y += genRand(-1, 1);
+					new_particles[i].points[j].x += genNormal(0, 1);
+					new_particles[i].points[j].y += genNormal(0, 1);
 				}
 
 				if (optimizeCandidate(new_particles[i].poses, linkage_region_pts, linkage_region_bbox, new_particles[i].points)) {
@@ -226,8 +226,10 @@ namespace kinematics {
 	* @param max_cost				maximum cost, which is used to normalized the cost for calculating the weight
 	*/
 	void LinkageSynthesis::resample(std::vector<Solution> particles, int N, std::vector<Solution>& resampled_particles, double max_cost) {
+		// sort the particles based on the costs
+		sort(particles.begin(), particles.end(), compare);
+
 		// calculate the weights of particles
-		int best_index = -1;
 		double min_cost = std::numeric_limits<double>::max();
 		std::vector<double> weights(particles.size());
 		double weight_total = 0.0;
@@ -238,10 +240,6 @@ namespace kinematics {
 			}
 			else {
 				w = std::exp(-particles[i].cost / max_cost * 20);
-				if (particles[i].cost < min_cost) {
-					min_cost = particles[i].cost;
-					best_index = i;
-				}
 			}
 
 			if (i == 0) {
@@ -258,8 +256,11 @@ namespace kinematics {
 
 		// resample the particles based on their weights
 		resampled_particles.resize(N);
-		resampled_particles[0] = particles[best_index];
-		for (int i = 1; i < N; i++) {
+		int M = N * 0.1;
+		for (int i = 0; i < M; i++) {
+			resampled_particles[i] = particles[i];
+		}
+		for (int i = M; i < N; i++) {
 			double r = genRand();
 			auto it = std::lower_bound(weights.begin(), weights.end(), r);
 			int index = it - weights.begin();

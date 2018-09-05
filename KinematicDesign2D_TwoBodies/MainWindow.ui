@@ -38,6 +38,7 @@
      <string>Kinematics</string>
     </property>
     <addaction name="actionGenerateLinkageWattI"/>
+    <addaction name="actionChangeWeights"/>
     <addaction name="separator"/>
     <addaction name="actionRun"/>
     <addaction name="actionRunBackward"/>
@@ -556,6 +557,11 @@
    </property>
    <property name="text">
     <string>Show Linkage</string>
+   </property>
+  </action>
+  <action name="actionChangeWeights">
+   <property name="text">
+    <string>Change Weights</string>
    </property>
   </action>
  </widget>

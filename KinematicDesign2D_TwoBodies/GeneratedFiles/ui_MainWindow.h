@@ -74,6 +74,7 @@ public:
     QAction *actionShowGridLines;
     QAction *actionShowInputPoses;
     QAction *actionShowLinkage;
+    QAction *actionChangeWeights;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -277,6 +278,8 @@ public:
         actionShowLinkage->setObjectName(QStringLiteral("actionShowLinkage"));
         actionShowLinkage->setCheckable(true);
         actionShowLinkage->setChecked(true);
+        actionChangeWeights = new QAction(MainWindowClass);
+        actionChangeWeights->setObjectName(QStringLiteral("actionChangeWeights"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -319,6 +322,7 @@ public:
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
         menuTool->addAction(actionGenerateLinkageWattI);
+        menuTool->addAction(actionChangeWeights);
         menuTool->addSeparator();
         menuTool->addAction(actionRun);
         menuTool->addAction(actionRunBackward);
@@ -425,6 +429,7 @@ public:
         actionShowGridLines->setText(QApplication::translate("MainWindowClass", "Show Grid Lines", 0));
         actionShowInputPoses->setText(QApplication::translate("MainWindowClass", "Show Input Poses", 0));
         actionShowLinkage->setText(QApplication::translate("MainWindowClass", "Show Linkage", 0));
+        actionChangeWeights->setText(QApplication::translate("MainWindowClass", "Change Weights", 0));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0));
         menuTool->setTitle(QApplication::translate("MainWindowClass", "Kinematics", 0));
         menuMode->setTitle(QApplication::translate("MainWindowClass", "Mode", 0));
