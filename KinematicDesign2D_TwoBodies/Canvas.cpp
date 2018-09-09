@@ -348,8 +348,6 @@ namespace canvas {
 			kinematics::BBox dist_map_bbox;
 			kinematics::LinkageSynthesis::createDistanceMapForLinkageRegion(linkage_region_pts[0], 5, dist_map_bbox, dist_map);
 
-			//std::vector<std::vector<kinematics::Solution>> current_solutions(1);
-
 			// calculate the center of the valid regions
 			kinematics::BBox bbox = kinematics::boundingBox(linkage_region_pts[0]);
 			glm::dvec2 bbox_center = bbox.center();
@@ -374,11 +372,6 @@ namespace canvas {
 
 			time_t end = clock();
 			std::cout << "Elapsed: " << (double)(end - start) / CLOCKS_PER_SEC << " sec for obtaining " << cnt << " candidates." << std::endl;
-
-
-
-			// calculate the circle point curve and center point curve
-			//synthesis->calculateSolution(poses, linkage_region_pts[0], num_samples, fixed_body_pts, body_pts, sigmas, rotatable_crank, avoid_branch_defect, 1.0, solutions[0]);
 
 			if (cnt == 0) {
 				mainWin->ui.statusBar->showMessage("No candidate was found.");
@@ -419,15 +412,6 @@ namespace canvas {
 			std::cout << "Elapsed: " << (double)(end - start) / CLOCKS_PER_SEC << " sec for finding the best solution. " << std::endl;
 		}
 
-
-
-		//kinematics::Solution solution = synthesis->findBestSolution(poses, solutions[0], fixed_body_pts, body_pts, position_error_weight, orientation_error_weight, linkage_location_weight, trajectory_weight, size_weight);
-		//kinematics::Kinematics kin = synthesis->constructKinematics(solution.points, body_pts);
-
-		//kinematics.push_back(kin);
-
-
-
 		// setup the kinematic system
 		for (int i = 0; i < kinematics.size(); i++) {
 			kinematics[i].initialize();
@@ -460,8 +444,6 @@ namespace canvas {
 			cv::Mat dist_map;
 			kinematics::BBox dist_map_bbox;
 			kinematics::LinkageSynthesis::createDistanceMapForLinkageRegion(linkage_region_pts[0], 5, dist_map_bbox, dist_map);
-
-			//std::vector<std::vector<kinematics::Solution>> current_solutions(1);
 
 			// calculate the center of the valid regions
 			kinematics::BBox bbox = kinematics::boundingBox(linkage_region_pts[0]);
@@ -510,11 +492,6 @@ namespace canvas {
 			std::cout << "Elapsed: " << (double)(end - start) / CLOCKS_PER_SEC << " sec for finding the best solution. " << std::endl;
 		}
 		
-		//kinematics::Solution solution = synthesis->findBestSolution(poses, solutions[0], fixed_body_pts, body_pts, position_error_weight, orientation_error_weight, linkage_location_weight, trajectory_weight, size_weight);
-		//kinematics::Kinematics kin = synthesis->constructKinematics(solution.points, body_pts);
-
-		//kinematics.push_back(kin);
-
 		// setup the kinematic system
 		for (int i = 0; i < kinematics.size(); i++) {
 			kinematics[i].initialize();
